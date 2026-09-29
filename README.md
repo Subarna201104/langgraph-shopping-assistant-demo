@@ -1,71 +1,48 @@
-# Build an AI shopping assistant with LangGraph
+Shopping Assistant Demo
+This is a small practice chatbot that runs in your web browser. It can answer questions about a made-up shop. The products and orders are examples, so it cannot check a real order or sell anything.
+The project was inspired by the ideas in LinkedIn Learning's Build AI Agents and Chatbots with LangGraph. It is an original practice project, not the course's official exercise files.
+What can you ask it?
+Type this in the chat	What you should see
+What is the price of Nova headphones?	The sample price: ₹2,499
+What about its warranty?	The Nova headphones' warranty: 1 year. Ask this after the first question.
+Where is order ORD1001?	A made-up order status: shipped
+Summarize our chat	A short recap of what you asked
 
-This is an **original practice project** for the ideas in LinkedIn Learning's *Build AI Agents and Chatbots with LangGraph*. The shop, products, and orders are fictional. It is not a copy of the course's exercise files or a real order system.
 
-If you want to work through the video notebooks exactly, the course's [official exercise repository](https://github.com/LinkedInLearning/build-ai-agents-and-chatbots-with-langgraph-2021112) is separate from this project.
-
-## What you will build
-
-One chatbot can answer product questions, look up sample orders, and summarize your chat. LangGraph sends each message to the right part of the program and remembers the conversation during the current app session.
-
-| Course idea | File to explore | What happens |
-| --- | --- | --- |
-| Basic ReAct agent and a function tool | `first_agent.py` | Agent uses a multiplication tool |
-| Product Q&A and retrieval | `shop_data.py`, `bot.py` | Searches a tiny local catalog |
-| Custom orders graph | `bot.py` | Routes order questions to order lookup |
-| Reflection | `bot.py` | AI drafts, then reviews a chat summary |
-| Multi-agent routing and memory | `bot.py`, `app.py` | Router selects specialist; thread remembers chat |
-
-**Demo mode** works without a model key. It uses rules and sample data so you can learn the graph and test the UI. **AI mode** makes real model calls and can choose tools. API usage can cost money and is billed separately from ChatGPT subscriptions.
-
-## Start here on Windows (PowerShell)
-
-1. Install Python **3.11 or 3.12** from [python.org](https://www.python.org/downloads/) if needed. Open PowerShell in this extracted folder. Check `py --version`.
-2. Make a private Python environment and install the packages:
-
-   ```powershell
-   py -m venv .venv
-   .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-   ```
-
-3. Start the web app:
-
-   ```powershell
-   .\.venv\Scripts\python.exe -m streamlit run app.py
-   ```
-
-4. In the browser, select **Demo (no key needed)**. Ask: `What is the price of Nova headphones?`, then `What about its warranty?`, then `Where is order ORD1001?`, then `Summarize our chat`.
-
-If `py` is not recognized, install Python with the launcher or use `python` in the same commands. The app opens at `http://localhost:8501` by default. Stop it with **Ctrl+C** in PowerShell.
-
-## Turn on the real AI agents (optional)
-
-1. Get your own OpenAI Platform API key from [API keys](https://platform.openai.com/api-keys) and check [API billing](https://platform.openai.com/settings/organization/billing/overview). A ChatGPT subscription does not include API usage.
-2. In PowerShell, run `Copy-Item .env.example .env`, then `notepad .env`. Put your key after `OPENAI_API_KEY=`. Keep `.env` private; never paste the key into a chat, screenshot, or GitHub repository.
-3. Restart the web app. Select **AI (API key needed)**. Ask the same four questions.
-4. To see a tiny agent use a calculator tool, run:
-
-   ```powershell
-   .\.venv\Scripts\python.exe first_agent.py
-   ```
-
-The model defaults to `gpt-5-nano`; you can change `MODEL_NAME` in `.env` if your API account supports another tool-calling model.
-
-## See that the graph works
-
-Run the offline checks (they make no API calls):
-
-```powershell
-.\.venv\Scripts\python.exe -m unittest discover -s tests -v
-```
-
-## File map
-
-- `app.py`: browser chat screen.
-- `bot.py`: LangGraph nodes, routes, memory, and two AI specialist agents.
-- `shop_data.py`: fictional catalog and order lookup tools.
-- `first_agent.py`: small first exercise with a calculator tool.
-- `START_HERE.md`: a slow, step-by-step learning path and plain-English explanations.
-- `.env.example`: sample configuration. Your real `.env` is ignored by Git.
-
-InMemorySaver holds conversations only while the app process runs. Restarting the app loses that chat history. Product and order answers are deliberately based on fixed sample records.
+The Demo setting uses simple rules and sample information. It does not call an AI service, and you do not need an API key or payment details to try it. The optional AI setting is explained near the end.
+Run it on a Windows computer
+You need Python installed and an internet connection for the first setup. If you do not have Python, download it from python.org. You do not need to know Python to follow these steps.
+1. Download the project
+On this GitHub page, click the green Code button, then Download ZIP. Find the ZIP in Downloads, right-click it, and choose Extract All. Open the extracted folder that contains app.py and requirements.txt.
+2. Open Command Prompt in that folder
+Click the address bar at the top of File Explorer, type cmd, and press Enter. A black Command Prompt window will open in the correct folder.
+Type this and press Enter to check Python:
+py --version
+You should see a Python version number. If Windows says py is not recognized, install Python and reopen Command Prompt.
+3. Set up the project (first time only)
+Copy one line at a time into Command Prompt and press Enter after each line. Wait for the second command to finish downloading and installing the packages.
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+The .venv folder holds this project's Python packages. You do not need to open it or upload it to GitHub.
+4. Start the chatbot
+In the same Command Prompt window, run:
+.\.venv\Scripts\python.exe -m streamlit run app.py
+Your browser should open the app. If it does not, open http://localhost:8501 yourself. This address works on your computer while the program is running; it is not a public website.
+In the app, leave Demo (no key needed) selected. Type the four sample questions from the table above, one after another. You can click Start a new chat to clear the conversation.
+5. Stop or reopen it later
+To stop, return to Command Prompt and press Ctrl+C. To use it another day, open Command Prompt in the project folder again and run only the command in Step 4. You do not need to repeat the first-time setup.
+Already set it up with a folder named venv (without the dot)? Use venv\Scripts\python.exe -m streamlit run app.py instead of the Step 4 command.
+If something does not work
+- No module named streamlit: Run the second command in Step 3 again and wait for it to finish.
+- The browser did not open: Visit http://localhost:8501 while Command Prompt is still running.
+- It asks for an API key: In the app's sidebar, choose Demo (no key needed).
+- An order is missing: This practice shop only has the sample order IDs ORD1001, ORD1002, and ORD1003.
+What is LangGraph doing here?
+The program reads your question and sends it to the right part: product details, order status, chat recap, or a general reply. It remembers earlier messages during the current run, which lets you ask “What about its warranty?” after asking about Nova headphones. Closing and restarting the app clears that saved chat.
+If you want to explore the files, app.py makes the chat screen, bot.py decides where questions go, and shop_data.py contains the made-up product and order information. START_HERE.md explains more of the learning ideas.
+Optional: use the AI setting
+You can finish this project using Demo mode. The AI (API key needed) setting makes calls to the OpenAI API. It needs your own API key and may cost money; a ChatGPT subscription does not include API usage.
+If you choose to use it, check OpenAI API billing first. In Command Prompt in the project folder, run:
+copy .env.example .env
+notepad .env
+In Notepad, paste your API key after OPENAI_API_KEY=, save the file, close Notepad, and restart the app using Step 4. Then choose AI (API key needed) in the sidebar. Keep .env private: do not upload it to GitHub or share it in screenshots.
